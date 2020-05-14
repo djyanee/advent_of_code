@@ -7,10 +7,10 @@ defmodule InputReader do
 end
 
 defmodule PartOne do
-  def run do
+  def run(noun, verb) do
     InputReader.read
-    |> List.replace_at(1, 12)
-    |> List.replace_at(2, 2)
+    |> List.replace_at(1, noun)
+    |> List.replace_at(2, verb)
     |> calculate(0)
   end
 
@@ -36,4 +36,17 @@ defmodule PartOne do
   end
 end
 
-PartOne.run |> IO.inspect
+defmodule PartTwo do
+  def run(noun, verb) do
+    output = PartOne.run(noun, verb)
+
+    cond do
+      output == 19690720 -> 100 * noun + verb
+      noun == 99 -> run(0, verb + 1)
+      true -> run(noun + 1, verb)
+    end
+  end
+end
+
+PartOne.run(12, 2) |> IO.inspect
+PartTwo.run(0, 0) |> IO.inspect
